@@ -13,5 +13,4 @@ Local Search는 현 상태만 기억함
         - 하지만, 랜덤으로 시작하는 방법을 여러번 반복하면 Optimal한 부분을 찾을 확률이 높아진다
         - 100%는 절대 되지 않음
         - 8-queens 문제의 경우 31번 정도면 99% Optimality보장이 됨
-        - ![Image](./loc1.png)
-        
+![Image](./loc1.png)
