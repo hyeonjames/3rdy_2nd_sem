@@ -1,6 +1,6 @@
 # Local Search
 맨 땅에 헤딩하는 방법
-fringe : 지금 까지 탐색한 끝부분
+fringe : 지금 까지 탐색한 끝부분들, **탐색을 기다리는 노드들**
 
 Local Search는 현 상태만 기억함
 

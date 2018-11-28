@@ -9,7 +9,7 @@
 - Games - 적이 있는 경우
     - 나 : 나의 이익을 극대화 하는 것이 목표.
     - 상대방 : 나의 이익을 극소화 하는 것이 목표
-    - 솔루션 : 상대방에게 주어진 가능한의 모든 응답에 반응하는 것
+    - 솔루션 : 상대방에게 주어진 가능한의 모든 응답에대한 반응을 구체화하는 전략
     - 대부분의 경우 시간 문제 때문에 근사값에 가까운 답만 얻음
     - Utility function - 게임이 얼마나 나에게 유리하게 돌아가고 있는지
     - 예 : chess, checkers, Otehllo, Go
@@ -23,7 +23,7 @@
 - 게임이론용어:
     - Deterministic : 어떠한 행위의 결과는 예측가능하다
     - turn-taking : 서로 적대시 하는 두명의 플레이어가 있다
-    - zero-sum games : 한 플레이어가 체스를 + 1로 이기면, 상대편 플레이어는 -1로 지는 것이다.
+    - zero-sum games : 한 플레이어가 체스를 + 1로 이기면, 상대편 플레이어는 -1로 지는 것이다. 즉 합이 0이되야함
     - perfect information : 모든 게임의 상태를 관찰 가능
 
 
@@ -31,7 +31,7 @@
 
 - 두명의 플레이어 존재 (MAX and MIN)
 - MAX가 먼저 시작하고 게임이 끝날때 까지 턴이 반복됨
-- Games as search : 4개의 컴포넌트
+- Games as search : 4개의 구성요소
     - Initial state : e.g. board configuration of chess 체스의 초기 구성
     - Successor function : 현재 게임상태에서 가능한 모든 행위
     - Terminal test : 게임이 끝났는가?
@@ -56,9 +56,12 @@
 - 가정 : 두 플레이어는 항상 optimal하게 움직인다고 가정한다 -> infallible player
 - 나와 상대방의 가능한 모든 경우의 수를 탐색함
     - MAX 턴의 경우 : 모든 가능한 경로에서 Utility 값이 가장 큰 값을 올린다
-    - MIN 턴의 경우 : 모든 가능한 경로에서 Utility 값이 가장 작은 값을 올린다 ( Utility 값은 MAX의 utility값을 의미한다. )(infallible player이므로)
+    - MIN 턴의 경우 : 모든 가능한 경로에서 Utility 값이 가장 작은 값을 올린다 (infallible player이므로)
+    - Utility 값은 MAX의 utility값을 의미한다.
 - 이 전략은 최악의 시나리오에서의 Utility value값을 최대화한다.
 - 이 전략은 MIN이 꼭 optimal하게 움직이지 않더라도 작동한다
+- Time Complexity : O(b^d)
+- Space Complexity : O(bd)
 ## 멀티플레이어의 경우
 - utility 가 벡터가 됨. 
 - A,B,C플레이어의 경우 (UtilityForA,UtilityForB,UtilityForC)
@@ -75,6 +78,15 @@
 - Best-Case : O(b^(d/2)) = O(sqrt(b)^d)
 - 실 상황에서는 worst보다는 best-case에 가깝다
 - 체스같은 경우 b ~ 35 정도인데 best-case로 가면 b ~ 6정도가 된다
-- 
+- 알파 : 현재까지 나온 MAX의 DFS path에서 가장 큰 값
+- 베타 : 현재까지 나온 MIN의 DFS path에서 가장 작은 값
 
 
+## Utility (Evaulation) Functions
+- A Utility function:
+    - 현재 상태가 얼마나 나한테 유리한가
+    - Othello = 백의 개수 - 흑의 개수
+    - Chess = 백의 가중치 합 - 흑의 가중치 합
+        - 체스 말의 종류에 따라 점수(가중치)를 매김
+    - 전형적으로 \[-infinity, infinity\] 혹은 \[-1,1\] 
+    - 

@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>소공과제</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="식당-리뷰-시스템">식당 리뷰 시스템</h1>
+<h2 id="목적">목적</h2>
+<p>식당 리뷰 사이트를 개발함으로써 사용자가 손쉽게 자신의 위치와 음식별 카테고리로 분류해 어떠한 식당이 좋은지 정보를 얻는데 도움을 주도록 한다. 또한 사용자가 직접 리뷰와 평점을 내리고 그 결과를 다른 회원들과 공유하여 신뢰성 있는 결과를 보여주도록 한다.</p>
+<h2 id="범위">범위</h2>
+<p>검색을 통해 식당의 위치, 다른 회원들의 리뷰, 평점 등의 정보를 얻을 수 있으며, 카테고리 별로 또는 위치별로 분류한 결과를 보여준다.</p>
+<h2 id="기능적-요구사항">기능적 요구사항</h2>
+<ol type="1">
+<li><strong>회원 가입, 식당주 가입</strong>
+<ul>
+<li>회원 가입시 기본 회원의 가입인지, 식당주의 가입인지 여부를 묻는다</li>
+<li>ID, Password, 이름, email 주소, ID 중복확인, 비밀번호 재확인, 항목 미 기재 확인등을 한다.</li>
+<li>관리자의 경우 따로 회원가입이 없고 시스템 상에서 직접 만들어야 한다.</li>
+</ul></li>
+<li><strong>회원 정보 수정, 식당주 정보 수정</strong>
+<ul>
+<li>회원 혹은 식당주의 ID를 제외한 정보들을 수정할 수 있다.</li>
+</ul></li>
+<li><strong>회원 탈퇴</strong>
+<ul>
+<li>사이트에서 회원이 남긴 리뷰들을 제외한 모든 정보를 삭제한다.</li>
+</ul></li>
+<li><strong>식당주 탈퇴</strong>
+<ul>
+<li>사이트에서 모든 정보를 삭제한다.</li>
+<li>식당들이 모두 삭제된다는 경고를 띄운다.</li>
+</ul></li>
+<li><strong>로그인</strong>
+<ul>
+<li>ID, Password로 로그인 한다.</li>
+<li>ID 혹은 Password가 틀릴 경우 틀렸다는 경고메세지를 띄운다.</li>
+<li>ID 분실시 이름과 email 주소로 찾도록 한다.</li>
+<li>Password 분실시 ID, 이름, email 주소로 본인임을 확인하고 패스워드 변경을 할 수 있는 링크를 해당 email주소로 전송한다.</li>
+</ul></li>
+<li><strong>로그아웃</strong></li>
+<li><strong>식당 관리</strong>
+<ul>
+<li>식당 이름, 식당 위치, 음식 카테고리, 메뉴 정보, 식당 연락처</li>
+<li>식당주는 여러개의 식당을 올릴 수 있다. 추가 및 삭제 가능하다.</li>
+</ul></li>
+<li><strong>식당 검색</strong>
+<ul>
+<li>식당 이름, 위치 별로 검색하게 한다</li>
+<li>검색한 결과와 그 식당의 평점을 보여준다</li>
+</ul></li>
+<li><strong>리뷰 남기기</strong>
+<ul>
+<li>회원은 리뷰를 쓰고 수정할 수 있다.</li>
+<li>총점과 리뷰의 내용, 메뉴의 이름이나 사진 등을 올릴 수 있어야 한다.</li>
+<li>리뷰의 내용은 일부만 출력된다. 리뷰의 상세 내용은 리뷰를 클릭할 시에만 전체 내용이 보여지도록 한다.</li>
+</ul></li>
+<li><strong>리뷰신고</strong>
+<ul>
+<li>식당주는 회원이 올린 리뷰를 신고할 수 있다. 신고요청이 들어온 리뷰는 관리자가 승인함으로써 삭제된다.</li>
+<li>신고가 승인된 리뷰는 <strong>삭제된 리뷰입니다.</strong>라는 표시가 뜬다.</li>
+</ul></li>
+<li><strong>카테고리별 순위 검색</strong>
+<ul>
+<li>음식 카테고리별 ( 한식,중식,일식 등등 )로 가장 높은 순위의 식당을 한 페이지당 10개씩 보여준다.</li>
+</ul></li>
+<li><strong>식당 상세내용 조회</strong>
+<ul>
+<li>조회 하고자 하는 식당을 클릭하면 상세내용을 볼 수 있다.</li>
+<li>리뷰에 대한 목록도 같이 보여지며, 리뷰를 클릭하면 리뷰 상세내용을 조회한다.</li>
+</ul></li>
+<li><strong>리뷰 상세내용 조회</strong></li>
+<li><strong>회원 관리</strong>
+<ul>
+<li>관리자는 회원을 관리할 수 있다. 회원 조회, 강제탈퇴등의 기능을 가지고 있다.</li>
+</ul></li>
+<li><strong>리뷰 신고 관리</strong>
+<ul>
+<li>관리자는 신고요청이 들어온 리뷰를 검토하고 이를 승인할 수 있다.</li>
+<li>신고 처리 후 해당 회원에 대한 탈퇴처리는 회원관리를 통해서 한다. 이는 관리자의 자유이다. ## 비기능적 요구 사항</li>
+</ul></li>
+</ol>
+<ul>
+<li>회원가입은 전송후 20초 이내 이루어 져야한다.</li>
+<li>검색은 최대 7초 이내에 완료되어야 한다</li>
+<li>리뷰에 대한 상세내용을 조회시 5초 이내에 완료되어야 한다.</li>
+</ul>
+<h2 id="actor-도출">Actor 도출</h2>
+<ol type="1">
+<li><strong>관리자</strong>
+<ul>
+<li>리뷰에 대한 신고를 승인한다. 필요하에 회원 관리도 하는 객체</li>
+</ul></li>
+<li><strong>회원</strong>
+<ul>
+<li>식당 리뷰 사이트에 접속하여 식당에 대한 정보와 그 식당에 대한 리뷰를 남길 수 있는 객체</li>
+</ul></li>
+<li><strong>식당주</strong>
+<ul>
+<li>사이트에 직접 접속하여 식당을 추가/삭제, 정보를 수정할 수 있는 객체.</li>
+<li>회원이 쓴 리뷰를 신고 할 수 있다.</li>
+</ul></li>
+</ol>
+<h2 id="use-case-도출">Use-Case 도출</h2>
+<ol type="1">
+<li><strong>관리자</strong>
+<ul>
+<li>로그인</li>
+<li>ID/PW 찾기</li>
+<li>로그아웃</li>
+<li>회원 관리</li>
+<li>리뷰 신고 승인</li>
+</ul></li>
+<li><strong>회원</strong>
+<ul>
+<li>회원 가입</li>
+<li>로그인</li>
+<li>ID/PW 찾기</li>
+<li>로그아웃</li>
+<li>식당 검색</li>
+<li>리뷰 남기기</li>
+<li>회원 탈퇴</li>
+<li>회원 정보 수정</li>
+<li>카테고리별 순위</li>
+<li>식당 상세내용 조회</li>
+</ul></li>
+<li><strong>식당주</strong>
+<ul>
+<li>식당 관리</li>
+<li>식당주 정보 수정</li>
+<li>식당주 가입</li>
+<li>로그인</li>
+<li>로그아웃</li>
+<li>ID/PW 찾기</li>
+<li>식당 상세내용 조회</li>
+<li>리뷰 신고</li>
+</ul></li>
+</ol>
+<h2 id="use-case-다이어그램">Use Case 다이어그램</h2>
+<p><img src="models/USE_CASE.png" /></p>
+<h2 id="use-case-기술서">Use Case 기술서</h2>
+<h2 id="식당주-가입">### 식당주 가입</h2>
+<p><strong>Name</strong> : 식당주가입</p>
+<p><strong>Actors</strong> : 식당주</p>
+<p><strong>Description</strong> - 이 use case는 식당주가 식당 리뷰사이트를 이용하기 위해서 회원가입(식당주)을 위한 기본 정보를 입력하는 것이다. - ID, password, 이름, email주소, 식당정보(식당이름, 위치, 메뉴, 음식 카테고리, 영업시간, 연락처) 입력 - 비밀번호가 맞는지 재확인(비밀번호 확인) - 미기재 항목 확인 - 회원가입 확인 메시지 띄우기</p>
+<p><strong>Preconditions</strong> - 기존 가입 여부 확인</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 식당주 회원가입 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 회원 약관 동의 요청화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. 회원 약관 동의</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. 회원 정보 입력 양식 보여주기</td>
+</tr>
+<tr class="odd">
+<td>5. 식당주 회원 정보 입력 (ID, 비밀번호, 비밀번호 확인, 주민번호, Email, 식당정보)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>6. 확인버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 아이디 중복확인 Use-Case 수행</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 기존 가입 회원인지 DB에서 Email 로 확인</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>9. 회원 객체 생성</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>10. 생성된 식당주 회원정보 DB에 저장</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>11. 식당주 회원 등록 완료 화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line3. 회원 약관에 동의하지 않을 경우 메인 화면으로 돌아간다. - Line5. 취소 버튼을 누르면 입력 내용을 지운다. - Line7. 회원 정보를 입력하지 않은 항목이 있을 경우 재입력 요청 - Line7. 비밀번호가 8자리 이상이 아닐 경우 재입력 요청 - Line7. 비밀번호와 비밀번호확인이 서로 다를 경우 재입력 요청 - Line7. E-mail 형식에 맞지 않게 입력되었을 경우 재입력 요청 - Line8. 기존가입회원일 경우 오류메시지 출력</p>
+<p><img src="models/식당주가입.png" /></p>
+<h2 id="회원-가입">### 회원 가입</h2>
+<p><strong>Name</strong> : 회원가입</p>
+<p><strong>Actors</strong> : 회원</p>
+<p><strong>Description</strong> - 이 use case는 회원이 식당 리뷰사이트를 이용하기 위해서 회원가입을 위한 기본 정보를 입력하는 것이다. - ID, password, 이름, Email 주소 - 비밀번호가 맞는지 재확인(비밀번호 확인) - 미기재 항목 확인 - 회원가입 확인 메시지 띄우기</p>
+<p><strong>Preconditions</strong> - 기존 가입 여부 확인</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 회원가입 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 회원 약관 동의 요청화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. 회원 약관 동의</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. 회원 정보 입력 양식 보여주기</td>
+</tr>
+<tr class="odd">
+<td>5. 회원 정보 입력 (ID, 비밀번호, 비밀번호 확인, Email)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>6. 확인버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 아이디 중복확인 Use-Case 수행</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 기존 가입 회원인지 DB에서 Email 로 확인</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>9. 회원 객체 생성</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>10. 생성된 회원정보 DB에 저장</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>11. 회원 등록 완료 화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line3. 회원 약관에 동의하지 않을 경우 메인 화면으로 돌아간다. - Line5. 취소 버튼을 누르면 입력 내용을 지운다. - Line7. 회원 정보를 입력하지 않은 항목이 있을 경우 재입력 요청 - Line7. 비밀번호가 8자리 이상이 아닐 경우 재입력 요청 - Line7. 비밀번호와 비밀번호확인이 서로 다를 경우 재입력 요청 - Line7. E-mail 형식에 맞지 않게 입력되었을 경우 재입력 요청 - Line8. 기존가입회원일 경우 오류메시지 출력</p>
+<p><img src="models/회원가입.png" /></p>
+<h2 id="리뷰남기기">### 리뷰남기기</h2>
+<p><strong>Name</strong> : 리뷰남기기</p>
+<p><strong>Actors</strong> : 회원</p>
+<p><strong>Description</strong> - 이 use case는 회원이 식당 리뷰사이트에 등재된 식당에 리뷰를 남기는 것이다. - 메뉴명, 사진, 글, 평점을 입력 - 글과 평점은 필수 항목이나 메뉴명과 사진은 선택에 따라 입력할 수 있다. - 짧은 시간(3분)내에 반복해서 올릴 수 없도록 구현</p>
+<p><strong>Preconditions</strong></p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 식당 상세내용 화면의 리뷰 남기기 버튼을 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 식당 리뷰 입력 화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. 메뉴명, 사진, 글, 평점을 입력</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 입력한 리뷰가 유효한지 확인</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 리뷰 객체 생성</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. DB에 리뷰 객체 INSERT</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 리뷰 등록 확인 화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line2. 해당 회원이 리뷰를 3분내에 남겼었을 경우 오류 메세지를 보여준다. - Line5. 글 혹은 평점이 입력되지 않았을 경우 재입력 요청</p>
+<p><img src="models/리뷰남기기.png" /></p>
+<h2 id="로그인">### 로그인</h2>
+<p><strong>Name</strong> : 로그인</p>
+<p><strong>Actors</strong> : 관리자, 회원, 식당주</p>
+<p><strong>Description</strong> - 이 use case는 관리자, 회원 또는 식당주가 리뷰사이트를 이용하기 위해서 기존의 등록된 아이디와 패스워드로 로그인 하는 것이다. - ID 및 비밀번호 입력을 요구한다. - 입력된 정보가 DB에 없을 경우 경고메시지 출력 및 재입력 요청. - 로그인화면에서 ID찾기와 PW찾기 use case로 넘어가는 버튼 배치</p>
+<p><strong>Preconditions</strong> - 입력된 ID와 비밀번호 조합이 기존에 DB에 등록이 되어있어야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 로그인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 로그인 화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. ID 및 비밀번호 입력</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 입력된 ID와 비밀번호 DB에서 확인</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 저장되어 있는 관리자, 회원, 식당주 정보 불러오기</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 해당 정보가 유효한 정보인지 확인</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 메인 화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line2. ID찾기 버튼을 누르면 ID찾기 use case를 수행한다. - Line2. PW찾기 버튼을 누르면 PW찾기 use case를 수행한다. - Line3. 취소 버튼을 누르면 입력 내용을 지운다. - Line5. ID와 비밀번호 조합이 기존DB에 등록되어 있지 않을 경우 재입력 요청 - Line7. 유효하지 않은 정보인 경우 오류메세지와 함께 재입력 요청 ( 회원의 경우 관리자에게 강제탈퇴 당한 경우 ) - Line8. 각 Actor에 맞는 메인 화면을 보여준다. 관리자는 관리자 메인, 식당주는 식당주 메인, 회원은 회원 메인화면을 보여준다.</p>
+<p><img src="models/로그인.png" /> ### 로그아웃 — <strong>Name</strong> : 로그아웃</p>
+<p><strong>Actors</strong> : 관리자, 회원, 식당주</p>
+<p><strong>Description</strong> - 이 use case는 로그인 되어있는 관리자, 회원 또는 식당주가 사이트 이용을 마치고 로그아웃을 하는 것이다.</p>
+<p><strong>Preconditions</strong> - 사이트에 로그인 되어있는 상태여야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 로그아웃 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 로그아웃 확인 화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. 확인 버튼 클릭하기</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. 불러왔었던 관리자, 회원, 또는 식당주 정보 연결끊기(세션 정보 삭제)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 로그인 전 메인 화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line2. 취소 버튼을 누르면 홈화면으로 돌아간다.</p>
+<p><img src="models/로그아웃.png" /></p>
+<h2 id="식당검색">### 식당검색</h2>
+<p><strong>Name</strong> : 식당검색</p>
+<p><strong>Actors</strong> : 회원</p>
+<p><strong>Description</strong> - 이 use case는 회원이 식당 리뷰사이트에 등재된 식당을 검색하는 것이다. - 식당명, 지역 조건으로 입력 받을 수 있음 - 교차 검색이 가능하도록 구현</p>
+<p><strong>Preconditions</strong></p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 식당 검색 탭 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 식당 검색 화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. 식당 검색에 필요한 정보 입력 (식당명, 지역)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. DB에 해당 조건에 맞는 식당을 검색</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 검색된 결과를 토대로 식당 리스트 화면 보여주기</td>
+</tr>
+<tr class="even">
+<td>6. 원하는 식당을 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 식당 상세내용 조회 Use-Case 수행</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line4. 식당명을 입력하지 않은 경우 재입력 요청 - Line4. 지역을 입력안한 경우 전체지역으로 검색 - Line5. 입력한 정보에 일치하는 품목이 하나도 없을 경우 검색 결과가 없다는 메세지 출력</p>
+<p><img src="models/식당검색.png" /></p>
+<h2 id="식당주-관리">### 식당주 관리</h2>
+<p><strong>Name</strong>: 식당 관리</p>
+<p><strong>Actors</strong>: 식당주</p>
+<p><strong>Description</strong>: - 이 use case는 식당주가 자신의 식당의 정보를 수정하거나 새로운 식당을 추가, 삭제하는 것이다. - 모든 적용은 사용자가 확인 버튼을 클릭해야 저장됨</p>
+<p><strong>Precondition</strong>: - 식당주로 로그인 되어있는 상태여야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 식당 관리 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 비밀번호 입력요청 화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. 비밀번호 입력</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 입력된 비밀번호가 해당 식당주의 비밀번호와 일치하는지 확인</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 식당 관리 양식 보여주기</td>
+</tr>
+<tr class="odd">
+<td>7. 기존 식당 수정 또는 추가, 삭제<br>(식당이름, 위치, 메뉴, 분류, 영업시간, 음식카테고리)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>8. 확인버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>9.수정된 식당 정보들이 유효한지 확인</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>10. 수정된 식당 정보들 DB에서 처리</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>11. 식당 수정 완료화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong></p>
+<ul>
+<li>Line 3. 취소 버튼을 누르면 입력 내용을 지움</li>
+<li>Line 5. 입력된 비밀번호가 해당식당주의 비밀번호와 일치하지 않을 경우 오류메시지 출력</li>
+<li>Line 7. 취소 버튼을 누르면 입력 내용을 지움</li>
+<li>Line 9. 식당 정보를 입력하지 않은 항목이 있을 경우 혹은 잘못된 입력 시 재입력 요청</li>
+</ul>
+<p><img src="models/식당관리.png" /></p>
+<h2 id="식당-상세내용-조회">### 식당 상세내용 조회</h2>
+<p><strong>Name</strong> : 식당 상세내용 조회</p>
+<p><strong>Actors</strong> : 식당주, 회원</p>
+<p><strong>Description</strong> - 이 use case는 식당주 또는 회원이 식당에 대한 상세내용을 조회하는 것이다. - 식당 상세내용에서 리뷰를 클릭하면 리뷰 상세내용 조회 use case로 넘어간다.</p>
+<p><strong>Preconditions</strong> - 로그인이 되어있는 상태여야함.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 조회하고자 하는 식당 조회 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 선택된 식당 확인</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. 선택된 식당의 정보 불러오기(이름, 위치, 카테고리, 메뉴, 연락처, 리뷰 정보들)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. 불러온 식당 상세내용 화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>5. 확인하고자 하는 리뷰정보 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 리뷰상세정보 확인 Use-Case 수행</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - 없음</p>
+<p><img src="models/식당상세내용조회.png" /></p>
+<h2 id="id찾기">### ID찾기</h2>
+<p><strong>Name</strong> : ID찾기</p>
+<p><strong>Actors</strong> : 관리자, 회원, 식당주</p>
+<p><strong>Description</strong> - 이 use case는 ID를 분실한 사용자가 자신의 이름과 e-mail 주소를 이용해서 ID를 찾는 것이다. - 이름과 e-mail을 입력받는다. - 입력받은 정보를 사용자정보 DB의 이름과 e-mail column과 비교해서 동시에 일치하는 row의 ID를 반환하여 보여준다.</p>
+<p><strong>Preconditions</strong> - 입력한 이름과 e-mail을 포함한 사용자정보가 DB에 insert되어있어야 한다. - 로그인 화면을 거쳐왔어야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. ID찾기 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. ID찾기 양식(이름과 e-mail주소) 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. ID찾기 양식에 이름과 e-mail주소 입력하기</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 회원과 식당주 DB검색(이름과 e-mail column을 비교해서 동시에 일치하는 row의 ID select)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 찾아낸 ID 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line3. 취소 버튼을 누르면 입력 내용을 지운다. - Line5. 이름과 e-mail중 입력되지 않은 항목이 있을 경우 재입력 요청 - Line5. DB내에 두 항목을 동시에 만족시키는 row가 없을 경우 오류메시지 출력</p>
+<p><img src="models/ID찾기.png" /></p>
+<h2 id="식당주-탈퇴">### 식당주 탈퇴</h2>
+<p><strong>Name</strong> : 식당주탈퇴</p>
+<p><strong>Actors</strong> : 식당주</p>
+<p><strong>Description</strong> - 이 use case는 본 리뷰사이트에 가입되어있는 식당주가 회원탈퇴 절차를 밟는 것이다. - 저장되어 있는 식당주 및 식당 관련 정보, 리뷰 삭제 - 탈퇴 완료 메시지 띄우기 - 탈퇴 완료 후 로그아웃 처리 <strong>Preconditions</strong> - 식당주로 로그인이 되어있는 상태여야함.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 식당주탈퇴 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 탈퇴신청 화면 보여주기(아이디 및 비밀번호 입력란)<br>(주의문구: 고객님과 고객님의 식당의 모든 정보가 삭제됩니다.)</td>
+</tr>
+<tr class="odd">
+<td>3. 아이디 및 비밀번호 입력</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 입력된 정보 확인</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 탈퇴신청한 식당주와 식당주소유의 식당 정보(리뷰포함) 일괄 삭제</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 해당 식당주 로그아웃 (세션 삭제) 처리</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 식당주탈퇴완료화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line3. 취소 버튼을 누르면 입력 내용을 지운다. - Line5. 입력하지 않은 항목이 있을 경우 재입력 요청 - Line5. 입력한 ID나 비밀번호가 일치하지 않을 경우 오류메시지 출력</p>
+<p><img src="models/식당주탈퇴.png" /></p>
+<h2 id="pw찾기">### PW찾기</h2>
+<p><strong>Name</strong> : PW찾기</p>
+<p><strong>Actors</strong> : 관리자, 회원, 식당주</p>
+<p><strong>Description</strong> - 이 use case는 ID를 분실한 사용자가 자신의 ID, 이름과 e-mail 주소를 이용해서 본인인증을 거친 후 패스워드를 변경할 수 있는 링크를 해당 e-mail주소로 전송하는 것이다. - ID와 이름과 e-mail주소를 입력받는다. - 입력받은 정보를 사용자정보 DB의 ID와 이름과 e-mail column과 비교해서 동시에 일치하는 row가 존재하면 본인임이 확인된 것이다. - 본인임이 확인되면 입력받은 e-mail 주소로 패스워드 변경링크를 전송한다.</p>
+<p><strong>Preconditions</strong> - 입력한 ID와 이름과 e-mail을 포함한 사용자정보가 DB에 insert되어있어야 한다. - 로그인 화면을 거쳐왔어야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. PW찾기 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. PW찾기 양식(ID와 이름과 e-mail주소) 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. PW찾기 양식에 ID와 이름과 e-mail주소 입력하기</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 회원과 식당주 DB검색(이름과 e-mail column을 비교해서 동시에 일치하는 row가 존재하는지 확인)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 입력된 e-mail주소로 패스워드 변경링크 전송</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 입력한 e-mail주소로 패스워드 변경링크가 전송되었다고 알림</td>
+</tr>
+<tr class="even">
+<td>8. 사용자가 e-mail 확인 뒤 링크 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>9. 비밀번호 변경화면 보여주기(변경할 비밀번호, 비밀번호 확인 입력란)</td>
+</tr>
+<tr class="even">
+<td>10. 비밀번호와 비밀번호 확인란 입력</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>11. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>12. 입력된 정보확인</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>13. 사전에 검색한 row의 pw값을 입력된 pw로 update</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>14. 비밀번호 변경 완료화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line3. 취소 버튼을 누르면 입력된 내용을 지운다. - Line5. ID와 이름과 e-mail중 입력되지 않은 항목이 있을 경우 재입력 요청 - Line5. DB내에 세 항목을 동시에 만족시키는 row가 없을 경우 오류메시지 출력 - Line10. 취소 버튼을 누르면 입력된 내용을 지운다. - Line12. 입력되지 않은 항목이 있을 경우 재입력 요청 - Line12. 비밀번호란과 비밀번호 확인란에 각각 입력된 값이 일치하지 않을 경우 재입력 요청</p>
+<p><img src="models/PW찾기.png" /></p>
+<h2 id="카테고리별-순위-조회">### 카테고리별 순위 조회</h2>
+<p><strong>Name</strong> : 카테고리별 순위 조회</p>
+<p><strong>Actors</strong> : 회원</p>
+<p><strong>Description</strong> - 이 use case는 음식 카테고리별 ( 한식, 중식, 일식, 등등 ) 식당의 평점 순위를 출력해주는 것이다. - 회원 로그인시 기본 메인 화면에서 동작한다. - 카테고리는 ’전체’가 기본값으로 설정되어 있다. - 순위는 한 페이지당 최대 10개로 한다. - 식당 정보는 위치, 이름, 평점, 리뷰수, 연락처 정도를 간략하게 보여준다.</p>
+<p><strong>Preconditions</strong></p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 홈에서 카테고리 선택 ( 전체, 한식,중식, 일식 , 등등 )</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. DB에서 카테고리별 순위를 평점 순(평점이 같은 경우 리뷰 순) 으로 가져온다</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. 가져온 데이터로 식당 리스트 화면을 보여준다</td>
+</tr>
+<tr class="even">
+<td>4. 조회하고자 하는 식당을 클릭한다</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 식당 상세조회 UseCase 수행</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - 없음</p>
+<p><img src="models/카테고리별순위.png" /></p>
+<h2 id="리뷰-신고">### 리뷰 신고</h2>
+<p><strong>Name</strong> : 리뷰신고</p>
+<p><strong>Actors</strong> : 식당주</p>
+<p><strong>Description</strong> - 이 use case는 식당주가 식당 리뷰사이트에 등록된 리뷰중 욕설, 비방, 허위정보 등이 포함된 부적절한 리뷰를 관리자측에 신고하는 것이다. - 리뷰 신고 사유 선택(음란성 및 욕설, 허위정보) - 신고된 리뷰는 관리자가 리뷰 신고 관리에서 승인 할 수 있다. - 신고 접수 메시지 띄우기</p>
+<p><strong>Preconditions</strong> - 로그인이 되어있는 상태여야함.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 리뷰신고 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 리뷰신고 사유선택과 내용 입력화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. 사유선택란 중 적절한 항목 선택 및 내용 입력</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 사유 및 내용이 유효한지 확인</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 해당 리뷰에 대한 신고 여부 DB에 UPDATE</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 리뷰신고 접수성공 화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line2. 취소 버튼을 누르면 입력 내용을 지운다. - Line5. 사유선택란중 아무 항목도 선택되지 않았을 경우 혹은 내용이 비어있는 경우 재입력 요청</p>
+<p><img src="models/리뷰신고.png" /> ### 리뷰 신고 관리 — <strong>Name</strong> : 리뷰 신고 관리</p>
+<p><strong>Actors</strong> : 관리자</p>
+<p><strong>Description</strong> - 이 use case는 식당주가 신고한 리뷰의 삭제를 승인할지 거절할지 정하는 것이다. - 신고 승인된 리뷰같은 경우 <strong>신고된 리뷰입니다</strong> 라는 표시로 뜨고 상세내용 조회가 되지 않는다.</p>
+<p><strong>Preconditions</strong> - 관리자로 로그인된 상태여야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 관리자 리뷰 신고 관리 탭 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 관리자 리뷰 신고 목록 화면 보여주기</td>
+</tr>
+<tr class="odd">
+<td>3. 신고된 리뷰 중 원하는 리뷰를 클릭하기</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. 해당 리뷰 승인 거절 메뉴 띄우기</td>
+</tr>
+<tr class="odd">
+<td>5. 해당 리뷰 신고 처리 승인/거절 버튼 누르기</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 해당 리뷰를 신고 승인/거절 상태로 DB에 UPDATE</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 리뷰 신고 승인 혹은 거절 처리가 되었다는 메세지를 띄운다</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line2. 신고된 리뷰가 없는 경우 <strong>신고된 리뷰가 없습니다</strong>라는 표시를 화면에 띄워준다.</p>
+<p><img src="models/리뷰신고관리.png" /></p>
+<h2 id="회원-탈퇴">### 회원 탈퇴</h2>
+<p><strong>Name</strong> : 회원 탈퇴</p>
+<p><strong>Actors</strong> : 회원</p>
+<p><strong>Description</strong> - 이 use case는 본 리뷰사이트에 가입 되어있는 회원이 회원탈퇴 절차를 밟는 것이다. - 저장되어 있는 회원 DB상에서 삭제 - 리뷰들은 그대로 남아있음 - 탈퇴 완료 메시지 띄우기</p>
+<p><strong>Preconditions</strong> - 로그인이 되어있는 상태여야함.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 회원탈퇴 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 탈퇴신청 화면 보여주기(아이디 및 비밀번호 입력란)<br>(주의문구: 고객님의 정보는 삭제되지만 고객님이 작성하신 리뷰 및 평점은 삭제되지 않습니다)</td>
+</tr>
+<tr class="odd">
+<td>3. 아이디 및 비밀번호 입력</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>4. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>5. 입력된 아이디와 비밀번호 DB에서 확인</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 해당 회원 정보 일괄 삭제</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 해당 회원 로그아웃 ( 세션 삭제 ) 처리</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 회원정보 삭제 완료 화면 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line3. 취소 버튼을 누르면 입력 내용을 지운다. - Line5. 입력하지 않은 항목이 있을 경우 재입력 요청 - Line5. 입력한 ID나 비밀번호가 일치하지 않을 경우 오류메시지 출력 및 재입력 요청</p>
+<p><img src="models/회원탈퇴.png" /></p>
+<h2 id="id-중복확인">### ID 중복확인</h2>
+<p><strong>Name</strong> : ID중복확인</p>
+<p><strong>Actors</strong> : 식당주, 회원</p>
+<p><strong>Description</strong> - 이 use case는 식당주, 또는 일반회원으로 새로 가입하려는 사용자가 가입과정에서 입력한 ID가 기존식당주 또는 회원의 ID와 중복되는지 확인하는 것이다. - 입력된 ID를 사용자 정보 DB내에 저장되어 있는 모든 ID와 비교 - ID 사용 가능 또는 사용 불가능 메시지 띄우기</p>
+<p><strong>Preconditions</strong> - 식당주가입 또는 회원가입 use case를 진행중인 상태여야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. ID중복확인 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 입력된 ID 확인</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. 입력된 ID를 사용자 정보DB의 ID칼럼의 모든 값과 비교</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. ID 사용가능 메시지 보여주기</td>
+</tr>
+<tr class="odd">
+<td>5. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line2. 입력된 ID가 없을 경우 재입력 요청 - Line4. 입력된 ID가 DB의 ID중 하나와 중복될 경우 ID가 이미 사용중이라는 메시지 보여주기</p>
+<p><img src="models/ID중복확인.png" /></p>
+<h2 id="리뷰-상세내용-조회">### 리뷰 상세내용 조회</h2>
+<p><strong>Name</strong> : 리뷰 상세내용 조회</p>
+<p><strong>Actors</strong> : 식당주, 회원</p>
+<p><strong>Description</strong> - 이 use case는 식당주 또는 회원이 식당에 대한 리뷰를 조회하는 것이다. - 식당 상세내용을 조회한 후 보여지는 리뷰목록 중 조회하고 싶은 리뷰를 조회한다.</p>
+<p><strong>Preconditions</strong> - 식당 상세내용 조회를 수행한 상태여야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 조회하고자 하는 리뷰 조회 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 선택된 리뷰 확인</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. DB에서 선택된 리뷰 객체 select</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. 불러온 리뷰 정보(메뉴명, 사진, 글, 평점) 및 작성한 회원이름과 작성날짜 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - 없음</p>
+<p><img src="models/리뷰상세내용조회.png" /></p>
+<h2 id="회원-관리">### 회원 관리</h2>
+<p><strong>Name</strong> : 회원 관리</p>
+<p><strong>Actors</strong> : 관리자</p>
+<p><strong>Description</strong> - 이 use case는 관리자가 회원을 관리할 때 회원의 목록을 보여주는 것이다. - 관리자는 최근 신고된 리뷰를 참고하여 처리를 할 수 있다. - 회원의 정보를 열람할 수 있다. - 회원 탈퇴를 시킬 수 있다.</p>
+<p><strong>Preconditions</strong></p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 회원 관리 탭 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 회원 목록 화면 보여주기 (ID, EMAIL, 작성한 리뷰수, 신고된 리뷰수)</td>
+</tr>
+<tr class="odd">
+<td>3. 처리를 원하는 회원을 클릭하기</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. 회원 정보 및 리뷰 상세 정보 보여주기</td>
+</tr>
+<tr class="odd">
+<td>5. 처리를 원하는 회원 줄의 탈퇴 버튼을 누르기</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 탈퇴 확인 동의 화면 보여주기 ( 정말로 해당 회원을 탈퇴시키겠습니까? )</td>
+</tr>
+<tr class="odd">
+<td>7. 확인 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 해당 회원 정보를 일괄 삭제</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>9. 회원정보 삭제 완료 메시지 보여주기</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line7. 확인이 아니라 취소를 누르면 동의 화면은 닫히고 아무런 동작을 하지 않는다.</p>
+<p><img src="models/회원관리.png" /></p>
+<h2 id="식당주-정보-수정">### 식당주 정보 수정</h2>
+<p><strong>Name</strong> : 식당주 정보 수정</p>
+<p><strong>Actors</strong> : 식당주</p>
+<p><strong>Description</strong> - 이 use case는 식당주가 자신의 ID를 제외한 정보들(비밀번호, email주소)을 수정하는 것이다. - 처리 후 메시지를 출력한다.</p>
+<p><strong>Preconditions</strong> - 사이트에 로그인 되어있는 상태여야 한다.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 식당주 정보 수정 요청</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 식당주 정보 DB에서 불러오기</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. 정보 수정 화면 보여주기</td>
+</tr>
+<tr class="even">
+<td>4. 수정사항을 입력</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5. 완료 버튼을 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 입력된 내용 확인</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 식당주 정보 DB에 업데이트</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 수정 완료 메시지 출력</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line4. 취소 버튼을 누르면 입력한 내용을 지운다. - Line6. 비밀번호가 8자리 이상이 아닐 경우 재입력 요청 - LIne6. 비밀번호와 비밀번호 확인이 서로 다를 경우 재입력 요청 - Line6. 유효하지 않은 이메일 양식일 경우 재입력 요청</p>
+<p><img src="models/식당주정보수정.png" /></p>
+<h2 id="회원-정보-수정">### 회원 정보 수정</h2>
+<p><strong>Name</strong> : 회원 정보 수정</p>
+<p><strong>Actors</strong> : 회원</p>
+<p><strong>Description</strong> - 이 use case는 회원이 ID를 제외한 나머지 정보들을 바꿀때 사용하는 것이다. - 처리 후 메시지를 출력한다.</p>
+<p><strong>Preconditions</strong> - 로그인이 되어있어야 함.</p>
+<p><strong>사건의 주 흐름</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Actor Action</th>
+<th>System Response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 회원정보수정 버튼 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2. 회원의 정보 DB에서 얻어오기</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. 회원정보수정 화면 보여주기(아이디는 수정불가, 나머지는 텍스트박스에 기존 정보를 입력</td>
+</tr>
+<tr class="even">
+<td>4. 수정사항을 입력</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>5. 완료 버튼을 클릭</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>6. 입력된 내용 검사</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>7. 회원 정보 DB에 업데이트</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>8. 수정 완료 메시지 출력</td>
+</tr>
+</tbody>
+</table>
+<p><strong>대안 흐름</strong> - 없음</p>
+<p><strong>예외 흐름</strong> - Line4. 취소 버튼을 누르면 입력한 내용을 지운다. - Line6. 비밀번호가 8자리 이상이 아닐 경우 재입력 요청 - LIne6. 비밀번호와 비밀번호 확인이 서로 다를 경우 재입력 요청 - Line6. 유효하지 않은 이메일 양식인 경우 재입력 요청</p>
+<p><img src="models/회원정보수정.png" /></p>
+</body>
+</html>
